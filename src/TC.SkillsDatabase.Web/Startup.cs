@@ -1,9 +1,12 @@
 ﻿using Microsoft.Owin;
-using Owin;
+using TC.SkillsDatabase.Web;
 
-[assembly: OwinStartupAttribute(typeof(TC.SkillsDatabase.Web.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace TC.SkillsDatabase.Web
 {
+    using System;
+    using Owin;
+
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)

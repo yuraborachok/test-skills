@@ -1,8 +1,17 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BundleConfig.cs" company="Thomas Cook Group">
+//   All rights reserved
+// </copyright>
+// <summary>
+//   Defines the BundleConfig type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace TC.SkillsDatabase.Web
 {
+    using System;
+    using System.Web.Optimization;
+
     public class BundleConfig
     {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862

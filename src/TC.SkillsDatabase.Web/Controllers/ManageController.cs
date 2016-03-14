@@ -1,18 +1,22 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using TC.SkillsDatabase.Web.Models;
-
-namespace TC.SkillsDatabase.Web.Controllers
+﻿namespace TC.SkillsDatabase.Web.Controllers
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web;
+    using System.Web.Mvc;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Models;
+
     [Authorize]
     public class ManageController : Controller
     {
+
+        // Used for XSRF protection when adding external logins
+        private const string XsrfKey = "XsrfId";
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -26,15 +30,26 @@ namespace TC.SkillsDatabase.Web.Controllers
             SignInManager = signInManager;
         }
 
+        public enum ManageMessageId
+        {
+            AddPhoneSuccess,
+            ChangePasswordSuccess,
+            SetTwoFactorSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+            RemovePhoneSuccess,
+            Error
+        }
+
         public ApplicationSignInManager SignInManager
         {
             get
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -50,7 +65,14 @@ namespace TC.SkillsDatabase.Web.Controllers
             }
         }
 
-        //
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -61,7 +83,7 @@ namespace TC.SkillsDatabase.Web.Controllers
                 : message == ManageMessageId.Error ? "An error has occurred."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-                : "";
+                : string.Empty;
 
             var userId = User.Identity.GetUserId();
             var model = new IndexViewModel
@@ -75,7 +97,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return View(model);
         }
 
-        //
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -99,14 +120,12 @@ namespace TC.SkillsDatabase.Web.Controllers
             return RedirectToAction("ManageLogins", new { Message = message });
         }
 
-        //
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
             return View();
         }
 
-        //
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -130,7 +149,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
         }
 
-        //
         // POST: /Manage/EnableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -145,7 +163,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
         // POST: /Manage/DisableTwoFactorAuthentication
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -160,7 +177,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        //
         // GET: /Manage/VerifyPhoneNumber
         public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
         {
@@ -169,7 +185,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
-        //
         // POST: /Manage/VerifyPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -190,11 +205,10 @@ namespace TC.SkillsDatabase.Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AddPhoneSuccess });
             }
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "Failed to verify phone");
+            ModelState.AddModelError(string.Empty, "Failed to verify phone");
             return View(model);
         }
 
-        //
         // GET: /Manage/RemovePhoneNumber
         public async Task<ActionResult> RemovePhoneNumber()
         {
@@ -211,14 +225,12 @@ namespace TC.SkillsDatabase.Web.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RemovePhoneSuccess });
         }
 
-        //
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
             return View();
         }
 
-        //
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -242,14 +254,12 @@ namespace TC.SkillsDatabase.Web.Controllers
             return View(model);
         }
 
-        //
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
             return View();
         }
 
-        //
         // POST: /Manage/SetPassword
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -274,14 +284,13 @@ namespace TC.SkillsDatabase.Web.Controllers
             return View(model);
         }
 
-        //
         // GET: /Manage/ManageLogins
         public async Task<ActionResult> ManageLogins(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
                 : message == ManageMessageId.Error ? "An error has occurred."
-                : "";
+                : string.Empty;
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             if (user == null)
             {
@@ -297,7 +306,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             });
         }
 
-        //
         // POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -307,7 +315,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
-        //
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
         {
@@ -331,23 +338,12 @@ namespace TC.SkillsDatabase.Web.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
+        #region Helpers
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", error);
+                ModelState.AddModelError(string.Empty, error);
             }
         }
 
@@ -371,17 +367,6 @@ namespace TC.SkillsDatabase.Web.Controllers
             return false;
         }
 
-        public enum ManageMessageId
-        {
-            AddPhoneSuccess,
-            ChangePasswordSuccess,
-            SetTwoFactorSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            RemovePhoneSuccess,
-            Error
-        }
-
-#endregion
+        #endregion
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.Web;
-using System.Web.Mvc;
-
-namespace TC.SkillsDatabase.Web
+﻿namespace TC.SkillsDatabase.Web
 {
+    using System;
+    using System.Web.Mvc;
+
     public class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
