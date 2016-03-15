@@ -16,6 +16,8 @@
             {
                 cfg.CreateMap<Location, LocationDto>().ReverseMap();
             });
+            Mapper.CreateMap<Team, TeamDto>();
+            Mapper.CreateMap<TeamDto, Team>();
         }
     }
 }

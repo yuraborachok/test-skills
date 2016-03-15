@@ -2,10 +2,9 @@
 {
     using System;
     using DAL;
+    using Interfaces;
     using LightInject;
-    // using Interfaces;
-
-    // using Services;
+    using Services;
 
     public static class InjectionConfig
     {
@@ -13,7 +12,7 @@
         {
             var container = new ServiceContainer();
 
-            // container.Register<ICategoryService, CategoryService>(new PerScopeLifetime());
+            container.Register<ITeamService, TeamService>(new PerScopeLifetime());
 
             container.Register((serviceFactory) => new SkillsDatabaseContext(), new PerScopeLifetime());
             container.Register(typeof(IRepository<>), typeof(Repository<>));

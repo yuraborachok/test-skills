@@ -12,10 +12,10 @@
 
     public class LocationController : Controller
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
-
         private readonly ILocationService locationService;
 
+        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+     
         public LocationController(ILocationService locationService)
         {
             this.locationService = locationService;

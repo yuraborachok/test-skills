@@ -1,44 +1,43 @@
 ﻿namespace TC.SkillsDatabase.Web.Controllers
 {
     using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
-    using Core.Models.DbModels;
-    using DAL;
+    using BL.Interfaces;
+    using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
 
-    public class TeamController : Controller
+    public class TeamController : BaseAbstractController
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+        private readonly ITeamService teamService;
+
+        public TeamController(ITeamService teamService)
+        {
+            this.teamService = teamService;
+        }
 
         // GET: Team
         public ActionResult Index()
         {
-            return View(db.Teams.ToList());
+            return this.View(this.teamService.GetAll());
         }
 
         // GET: Team/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            var category = this.teamService.GetById(id);
+            if (category == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Team team = db.Teams.Find(id);
-            if (team == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(team);
+            return this.View(category);
         }
 
         // GET: Team/Create
         public ActionResult Create()
         {
-            return View();
+            return this.View();
         }
 
         // POST: Team/Create
@@ -46,33 +45,34 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Team team)
+        public ActionResult Create(TeamDto team)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.Teams.Add(team);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.teamService.Create(team);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.TeamSuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            return View(team);
+            return this.View(team);
         }
 
         // GET: Team/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = this.teamService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Team team = db.Teams.Find(id);
-            if (team == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(team);
+            return this.View(model);
         }
 
         // POST: Team/Edit/5
@@ -80,33 +80,35 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Team team)
+        public ActionResult Edit(TeamDto team)
         {
-            if (ModelState.IsValid)
+            IServiceResult<TeamDto> result = null;
+            if (this.ModelState.IsValid)
             {
-                db.Entry(team).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                result = this.teamService.Update(team);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.TeamSuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            return View(team);
+            this.ProcessNotifications(result);
+
+            return this.View(team);
         }
 
         // GET: Team/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.teamService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Team team = db.Teams.Find(id);
-            if (team == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(team);
+            return this.View(model);
         }
 
         // POST: Team/Delete/5
@@ -114,20 +116,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Team team = db.Teams.Find(id);
-            db.Teams.Remove(team);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.teamService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.TeamSuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
         }
     }
 }

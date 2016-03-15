@@ -74,6 +74,8 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Interfaces\ITeamService.cs" />
+    <Compile Include="Services\TeamService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
