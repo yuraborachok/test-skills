@@ -193,10 +193,18 @@
     <Compile Include="Controllers\AccountController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Controllers\ResourceController.cs" />
+    <Compile Include="Controllers\ResourceRoleController.cs" />
+    <Compile Include="Controllers\ResourceSkillController.cs" />
+    <Compile Include="Controllers\SkillController.cs" />
+    <Compile Include="Controllers\SkillLevelController.cs" />
+    <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -281,6 +289,46 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Location\Create.cshtml" />
+    <Content Include="Views\Location\Delete.cshtml" />
+    <Content Include="Views\Location\Details.cshtml" />
+    <Content Include="Views\Location\Edit.cshtml" />
+    <Content Include="Views\Location\Index.cshtml" />
+    <Content Include="Views\ResourceRole\Create.cshtml" />
+    <Content Include="Views\ResourceRole\Delete.cshtml" />
+    <Content Include="Views\ResourceRole\Details.cshtml" />
+    <Content Include="Views\ResourceRole\Edit.cshtml" />
+    <Content Include="Views\ResourceRole\Index.cshtml" />
+    <Content Include="Views\Resource\Create.cshtml" />
+    <Content Include="Views\Resource\Delete.cshtml" />
+    <Content Include="Views\Resource\Details.cshtml" />
+    <Content Include="Views\Resource\Edit.cshtml" />
+    <Content Include="Views\Resource\Index.cshtml" />
+    <Content Include="Views\ResourceSkill\Create.cshtml" />
+    <Content Include="Views\ResourceSkill\Delete.cshtml" />
+    <Content Include="Views\ResourceSkill\Details.cshtml" />
+    <Content Include="Views\ResourceSkill\Edit.cshtml" />
+    <Content Include="Views\ResourceSkill\Index.cshtml" />
+    <Content Include="Views\Skill\Create.cshtml" />
+    <Content Include="Views\Skill\Delete.cshtml" />
+    <Content Include="Views\Skill\Details.cshtml" />
+    <Content Include="Views\Skill\Edit.cshtml" />
+    <Content Include="Views\Skill\Index.cshtml" />
+    <Content Include="Views\SkillLevel\Create.cshtml" />
+    <Content Include="Views\SkillLevel\Delete.cshtml" />
+    <Content Include="Views\SkillLevel\Details.cshtml" />
+    <Content Include="Views\SkillLevel\Edit.cshtml" />
+    <Content Include="Views\SkillLevel\Index.cshtml" />
+    <Content Include="Views\Team\Create.cshtml" />
+    <Content Include="Views\Team\Delete.cshtml" />
+    <Content Include="Views\Team\Details.cshtml" />
+    <Content Include="Views\Team\Edit.cshtml" />
+    <Content Include="Views\Team\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -297,6 +345,10 @@
     <ProjectReference Include="..\TC.SkillsDatabase.Core\TC.SkillsDatabase.Core.csproj">
       <Project>{57951277-d2b3-4442-92d7-6a989f053b80}</Project>
       <Name>TC.SkillsDatabase.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TC.SkillsDatabase.DAL\TC.SkillsDatabase.DAL.csproj">
+      <Project>{f856f307-e8c7-4ebe-8e25-6e24a3f72ffb}</Project>
+      <Name>TC.SkillsDatabase.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,51 @@
+﻿@model TC.SkillsDatabase.Core.Models.DbModels.ResourceSkill
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ResourceSkill</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Resource.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resource.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Skill.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Skill.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SkillLevel.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SkillLevel.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SkillLevelValue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SkillLevelValue)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
