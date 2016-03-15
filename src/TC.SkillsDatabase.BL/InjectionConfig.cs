@@ -2,8 +2,9 @@
 {
     using System;
     using DAL;
-    // using Interfaces;
     using LightInject;
+    // using Interfaces;
+
     // using Services;
 
     public static class InjectionConfig

@@ -5,28 +5,33 @@
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
+    using BL.Interfaces;
     using Core.Models.DbModels;
+    using Core.Models.DTO;
     using DAL;
 
     public class LocationController : Controller
     {
         private SkillsDatabaseContext db = new SkillsDatabaseContext();
 
+        private readonly ILocationService locationService;
+
+        public LocationController(ILocationService locationService)
+        {
+            this.locationService = locationService;
+        }
+
         // GET: Location
         public ActionResult Index()
         {
-            return View(db.Locations.ToList());
+            return View(this.locationService.GetAll());
         }
 
         // GET: Location/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var location = this.locationService.GetById(id);
 
-            Location location = db.Locations.Find(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -46,27 +51,21 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Location location)
+        public ActionResult Create(LocationDto location)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.Locations.Add(location);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.locationService.Create(location);
+                return this.RedirectToAction("Index");
             }
 
             return View(location);
         }
 
         // GET: Location/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Location location = db.Locations.Find(id);
+            var location = this.locationService.GetById(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -80,12 +79,11 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Location location)
+        public ActionResult Edit(LocationDto location)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.Entry(location).State = EntityState.Modified;
-                db.SaveChanges();
+                var result = this.locationService.Update(location);
                 return RedirectToAction("Index");
             }
 
@@ -93,7 +91,7 @@
         }
 
         // GET: Location/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
             if (id == null)
             {

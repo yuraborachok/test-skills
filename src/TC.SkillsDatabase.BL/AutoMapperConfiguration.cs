@@ -11,6 +11,11 @@
         {
             Mapper.CreateMap<Category, CategoryDto>();
             Mapper.CreateMap<CategoryDto, Category>();
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Location, LocationDto>().ReverseMap();
+            });
         }
     }
 }
