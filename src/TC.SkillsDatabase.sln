@@ -4,8 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC.SkillsDatabase.Web", "TC.SkillsDatabase.Web\TC.SkillsDatabase.Web.csproj", "{9A108D5A-D35C-446C-8BAF-EB03BC71BE20}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4EDF442-1E96-4D4B-B70F-D42EED86FEE5} = {A4EDF442-1E96-4D4B-B70F-D42EED86FEE5}
+		{57951277-D2B3-4442-92D7-6A989F053B80} = {57951277-D2B3-4442-92D7-6A989F053B80}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC.SkillsDatabase.DAL", "TC.SkillsDatabase.DAL\TC.SkillsDatabase.DAL.csproj", "{F856F307-E8C7-4EBE-8E25-6E24A3F72FFB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{57951277-D2B3-4442-92D7-6A989F053B80} = {57951277-D2B3-4442-92D7-6A989F053B80}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC.SkillsDatabase.Core", "TC.SkillsDatabase.Core\TC.SkillsDatabase.Core.csproj", "{57951277-D2B3-4442-92D7-6A989F053B80}"
 EndProject
@@ -17,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{478069
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TC.SkillsDatabase.BL", "TC.SkillsDatabase.BL\TC.SkillsDatabase.BL.csproj", "{A4EDF442-1E96-4D4B-B70F-D42EED86FEE5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F856F307-E8C7-4EBE-8E25-6E24A3F72FFB} = {F856F307-E8C7-4EBE-8E25-6E24A3F72FFB}
+		{57951277-D2B3-4442-92D7-6A989F053B80} = {57951277-D2B3-4442-92D7-6A989F053B80}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

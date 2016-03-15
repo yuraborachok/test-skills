@@ -55,12 +55,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\DbModels\Category.cs" />
+    <Compile Include="Models\DbModels\Location.cs" />
+    <Compile Include="Models\DbModels\Resource.cs" />
+    <Compile Include="Models\DbModels\ResourceRole.cs" />
+    <Compile Include="Models\DbModels\ResourceSkill.cs" />
+    <Compile Include="Models\DbModels\Skill.cs" />
+    <Compile Include="Models\DbModels\SkillLevel.cs" />
+    <Compile Include="Models\DbModels\Team.cs" />
+    <Compile Include="Models\DbModels\User.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\DbModels\" />
     <Folder Include="Models\DTO\" />
   </ItemGroup>
   <ItemGroup>

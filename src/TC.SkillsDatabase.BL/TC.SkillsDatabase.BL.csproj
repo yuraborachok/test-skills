@@ -67,6 +67,16 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TC.SkillsDatabase.Core\TC.SkillsDatabase.Core.csproj">
+      <Project>{57951277-d2b3-4442-92d7-6a989f053b80}</Project>
+      <Name>TC.SkillsDatabase.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TC.SkillsDatabase.DAL\TC.SkillsDatabase.DAL.csproj">
+      <Project>{f856f307-e8c7-4ebe-8e25-6e24a3f72ffb}</Project>
+      <Name>TC.SkillsDatabase.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

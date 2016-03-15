@@ -277,6 +277,16 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TC.SkillsDatabase.BL\TC.SkillsDatabase.BL.csproj">
+      <Project>{a4edf442-1e96-4d4b-b70f-d42eed86fee5}</Project>
+      <Name>TC.SkillsDatabase.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TC.SkillsDatabase.Core\TC.SkillsDatabase.Core.csproj">
+      <Project>{57951277-d2b3-4442-92d7-6a989f053b80}</Project>
+      <Name>TC.SkillsDatabase.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -205,3 +205,5 @@ output/
 build/tools/NAnt/
 
 !ChromeDriver.exe
+*.mdf
+*.ldf
