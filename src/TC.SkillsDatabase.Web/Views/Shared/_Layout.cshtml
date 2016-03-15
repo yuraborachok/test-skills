@@ -1,15 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@using System
+@using Microsoft.AspNet.Identity
+@using TC.SkillsDatabase.Web.Helpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Skills Database</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-static-top" style="margin-bottom: 0;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,23 +19,83 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <a class="navbar-brand" href="/">
+                    Skills database
+                </a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Admin <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Period", "Index", "Period")</li>
+                                <li>@Html.ActionLink("Category", "Index", "Category")</li>
+                                <li>@Html.ActionLink("Location", "Index", "Location")</li>
+                                <li>@Html.ActionLink("Occupation", "Index", "Occupation")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Settings", "Index", "EapSetting")</li>
+                                <li>@Html.ActionLink("Common pages", "Index", "Page")</li>
+                                <li>@Html.ActionLink("Users", "Index", "User")</li>
+                                <li>@Html.ActionLink("Upload Emails", "Index", "EmailsUpload")</li>
+                            </ul>
+                        </li>
+                    }
+
+                    <li>@Html.ActionLink("Contact Us", "Preview", "Page", new { code = "ContactUs" }, null)</li>
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>
+                            @Html.ActionLink("Hello " + User.FirstName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Hello " + User.FirstName() + "!", id = "manageLink", @class = "tc-cut-greeting-menuitem" })
+                        </li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()" id="logOffLink">Log off</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    }
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
+
+    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+
     <div class="container body-content">
+        @if (TempData["Errors"] != null)
+        {
+            foreach (var error in (List<string>)TempData["Errors"])
+            {
+                <div class="alert alert-danger" role="alert">@error</div>
+            }
+        }
+        @if (TempData["Warnings"] != null)
+        {
+            foreach (var warning in (List<string>)TempData["Warnings"])
+            {
+                <div class="alert alert-warning" role="alert">@warning</div>
+            }
+        }
+        @if (TempData["Messages"] != null)
+        {
+            foreach (var message in (List<string>)TempData["Messages"])
+            {
+                <div class="alert alert-success" role="alert">@message</div>
+            }
+        }
         @RenderBody()
-        <hr />
+        <hr class="tc-footer" />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.UtcNow.Year - Skills Database</p>
         </footer>
     </div>
 
