@@ -5,6 +5,8 @@ using TC.SkillsDatabase.Web;
 namespace TC.SkillsDatabase.Web
 {
     using System;
+    using BL;
+    using LightInject;
     using Owin;
 
     public partial class Startup
@@ -12,6 +14,10 @@ namespace TC.SkillsDatabase.Web
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            AutoMapperConfiguration.Configure();
+            var container = InjectionConfig.RegisterAllDependencies();
+            container.RegisterControllers();
+            container.EnableMvc();
         }
     }
 }
