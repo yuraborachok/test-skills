@@ -12,6 +12,9 @@
             Mapper.CreateMap<Category, CategoryDto>();
             Mapper.CreateMap<CategoryDto, Category>();
 
+            Mapper.CreateMap<ResourceRole, ResourceRoleDto>();
+            Mapper.CreateMap<ResourceRoleDto, ResourceRole>();
+
             Mapper.CreateMap<Team, TeamDto>();
             Mapper.CreateMap<TeamDto, Team>();
         }

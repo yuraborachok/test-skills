@@ -1,38 +1,37 @@
 ﻿namespace TC.SkillsDatabase.Web.Controllers
 {
     using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
-    using Core.Models.DbModels;
-    using DAL;
+    using BL.Interfaces;
+    using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
 
-    public class ResourceRoleController : Controller
+    public class ResourceRoleController : BaseAbstractController
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+        private readonly IResourceRoleService resourceRoleService;
+
+        public ResourceRoleController(IResourceRoleService resourceRoleService)
+        {
+            this.resourceRoleService = resourceRoleService;
+        }
 
         // GET: ResourceRole
         public ActionResult Index()
         {
-            return View(db.ResourceRoles.ToList());
+            return this.View(this.resourceRoleService.GetAll());
         }
 
         // GET: ResourceRole/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            var category = this.resourceRoleService.GetById(id);
+            if (category == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            ResourceRole resourceRole = db.ResourceRoles.Find(id);
-            if (resourceRole == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(resourceRole);
+            return this.View(category);
         }
 
         // GET: ResourceRole/Create
@@ -46,33 +45,34 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] ResourceRole resourceRole)
+        public ActionResult Create(ResourceRoleDto resourceRole)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.ResourceRoles.Add(resourceRole);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.resourceRoleService.Create(resourceRole);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.ResourceRoleSuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            return View(resourceRole);
+            return this.View(resourceRole);
         }
 
         // GET: ResourceRole/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = this.resourceRoleService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            ResourceRole resourceRole = db.ResourceRoles.Find(id);
-            if (resourceRole == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(resourceRole);
+            return this.View(model);
         }
 
         // POST: ResourceRole/Edit/5
@@ -80,33 +80,35 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] ResourceRole resourceRole)
+        public ActionResult Edit(ResourceRoleDto resourceRole)
         {
-            if (ModelState.IsValid)
+            IServiceResult<ResourceRoleDto> result = null;
+            if (this.ModelState.IsValid)
             {
-                db.Entry(resourceRole).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                result = this.resourceRoleService.Update(resourceRole);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.ResourceRoleSuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            return View(resourceRole);
+            this.ProcessNotifications(result);
+
+            return this.View(resourceRole);
         }
 
         // GET: ResourceRole/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.resourceRoleService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            ResourceRole resourceRole = db.ResourceRoles.Find(id);
-            if (resourceRole == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(resourceRole);
+            return this.View(model);
         }
 
         // POST: ResourceRole/Delete/5
@@ -114,20 +116,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ResourceRole resourceRole = db.ResourceRoles.Find(id);
-            db.ResourceRoles.Remove(resourceRole);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.resourceRoleService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.ResourceRoleSuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
         }
     }
 }

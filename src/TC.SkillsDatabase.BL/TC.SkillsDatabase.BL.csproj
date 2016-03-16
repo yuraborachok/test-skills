@@ -69,10 +69,12 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfiguration.cs" />
     <Compile Include="InjectionConfig.cs" />
+    <Compile Include="Interfaces\IResourceRoleService.cs" />
     <Compile Include="Interfaces\ITeamService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\ResourceRoleService.cs" />
     <Compile Include="Services\TeamService.cs" />
   </ItemGroup>
   <ItemGroup />
