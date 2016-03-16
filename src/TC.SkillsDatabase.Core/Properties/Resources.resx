@@ -119,6 +119,21 @@
   </resheader>
   <data name="DublicateLocationName" xml:space="preserve">
     <value>DublicateLocationName</value>
+   </data>
+  <data name="CategorySuccesfullyCreated" xml:space="preserve">
+    <value>CategorySuccesfullyCreated</value>
+  </data>
+  <data name="CategorySuccesfullyDeleted" xml:space="preserve">
+    <value>CategorySuccesfullyDeleted</value>
+  </data>
+  <data name="CategorySuccesfullyUpdated" xml:space="preserve">
+    <value>CategorySuccesfullyUpdated</value>
+  </data>
+  <data name="DublicateCategoryName" xml:space="preserve">
+    <value>DublicateCategoryName</value>
+  </data>
+  <data name="DublicateResourceRoleName" xml:space="preserve">
+    <value>DublicateResourceRoleName</value>
   </data>
   <data name="DublicateTeamName" xml:space="preserve">
     <value>DublicateTeamName</value>
@@ -131,6 +146,15 @@
   </data>
   <data name="LocationSuccesfullyUpdated" xml:space="preserve">
     <value>LocationSuccesfullyUpdated</value>
+   </data>
+  <data name="ResourceRoleSuccesfullyCreated" xml:space="preserve">
+    <value>ResourceRoleSuccesfullyCreated</value>
+  </data>
+  <data name="ResourceRoleSuccesfullyDeleted" xml:space="preserve">
+    <value>ResourceRoleSuccesfullyDeleted</value>
+  </data>
+  <data name="ResourceRoleSuccesfullyUpdated" xml:space="preserve">
+    <value>ResourceRoleSuccesfullyUpdated</value>
   </data>
   <data name="TeamSuccesfullyCreated" xml:space="preserve">
     <value>TeamSuccesfullyCreated</value>

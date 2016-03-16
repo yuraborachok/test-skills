@@ -14,6 +14,7 @@
                 cfg.CreateMap<Location, LocationDto>().ReverseMap();
                 cfg.CreateMap<Category, CategoryDto>().ReverseMap();
                 cfg.CreateMap<Team, TeamDto>().ReverseMap();
+                cfg.CreateMap<ResourceRole, ResourceRoleDto>().ReverseMap();
             });
         }
     }

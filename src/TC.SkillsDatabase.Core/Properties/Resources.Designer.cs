@@ -61,11 +61,56 @@ namespace TC.SkillsDatabase.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CategorySuccesfullyCreated.
+        /// </summary>
+        public static string CategorySuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("CategorySuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CategorySuccesfullyDeleted.
+        /// </summary>
+        public static string CategorySuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("CategorySuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CategorySuccesfullyUpdated.
+        /// </summary>
+        public static string CategorySuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("CategorySuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DublicateCategoryName.
+        /// </summary>
+        public static string DublicateCategoryName {
+            get {
+                return ResourceManager.GetString("DublicateCategoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DublicateLocationName.
         /// </summary>
         public static string DublicateLocationName {
             get {
                 return ResourceManager.GetString("DublicateLocationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DublicateResourceRoleName.
+        /// </summary>
+        public static string DublicateResourceRoleName {
+            get {
+                return ResourceManager.GetString("DublicateResourceRoleName", resourceCulture);
             }
         }
         
@@ -102,6 +147,33 @@ namespace TC.SkillsDatabase.Core.Properties {
         public static string LocationSuccesfullyUpdated {
             get {
                 return ResourceManager.GetString("LocationSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceRoleSuccesfullyCreated.
+        /// </summary>
+        public static string ResourceRoleSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("ResourceRoleSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceRoleSuccesfullyDeleted.
+        /// </summary>
+        public static string ResourceRoleSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("ResourceRoleSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceRoleSuccesfullyUpdated.
+        /// </summary>
+        public static string ResourceRoleSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("ResourceRoleSuccesfullyUpdated", resourceCulture);
             }
         }
         
