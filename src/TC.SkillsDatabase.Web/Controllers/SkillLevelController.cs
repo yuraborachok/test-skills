@@ -1,38 +1,37 @@
 ﻿namespace TC.SkillsDatabase.Web.Controllers
 {
     using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
-    using Core.Models.DbModels;
-    using DAL;
+    using BL.Interfaces;
+    using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
 
-    public class SkillLevelController : Controller
+    public class SkillLevelController : BaseAbstractController
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+        private readonly ISkillLevelService skillLevelService;
+
+        public SkillLevelController(ISkillLevelService skillLevelService)
+        {
+            this.skillLevelService = skillLevelService;
+        }
 
         // GET: SkillLevel
         public ActionResult Index()
         {
-            return View(db.SkillLevels.ToList());
+            return this.View(this.skillLevelService.GetAll());
         }
 
         // GET: SkillLevel/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            var category = this.skillLevelService.GetById(id);
+            if (category == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            SkillLevel skillLevel = db.SkillLevels.Find(id);
-            if (skillLevel == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(skillLevel);
+            return this.View(category);
         }
 
         // GET: SkillLevel/Create
@@ -46,33 +45,34 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Description,Value,IsForLanguageSkill")] SkillLevel skillLevel)
+        public ActionResult Create(SkillLevelDto skillLevel)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.SkillLevels.Add(skillLevel);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.skillLevelService.Create(skillLevel);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.SkillLevelSuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            return View(skillLevel);
+            return this.View(skillLevel);
         }
 
         // GET: SkillLevel/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = this.skillLevelService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            SkillLevel skillLevel = db.SkillLevels.Find(id);
-            if (skillLevel == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(skillLevel);
+            return this.View(model);
         }
 
         // POST: SkillLevel/Edit/5
@@ -80,33 +80,35 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Description,Value,IsForLanguageSkill")] SkillLevel skillLevel)
+        public ActionResult Edit(SkillLevelDto skillLevel)
         {
-            if (ModelState.IsValid)
+            IServiceResult<SkillLevelDto> result = null;
+            if (this.ModelState.IsValid)
             {
-                db.Entry(skillLevel).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                result = this.skillLevelService.Update(skillLevel);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.SkillLevelSuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            return View(skillLevel);
+            this.ProcessNotifications(result);
+
+            return this.View(skillLevel);
         }
 
         // GET: SkillLevel/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.skillLevelService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            SkillLevel skillLevel = db.SkillLevels.Find(id);
-            if (skillLevel == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(skillLevel);
+            return this.View(model);
         }
 
         // POST: SkillLevel/Delete/5
@@ -114,20 +116,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            SkillLevel skillLevel = db.SkillLevels.Find(id);
-            db.SkillLevels.Remove(skillLevel);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.skillLevelService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.SkillLevelSuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
         }
     }
 }

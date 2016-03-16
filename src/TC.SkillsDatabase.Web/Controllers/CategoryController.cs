@@ -5,40 +5,44 @@
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
+    using BL.Interfaces;
     using Core.Models.DbModels;
+    using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
     using DAL;
 
-    public class CategoryController : Controller
+    public class CategoryController : BaseAbstractController
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+        private readonly ICategoryService categoryService;
+
+        public CategoryController(ICategoryService categoryService)
+        {
+            this.categoryService = categoryService;
+        }
 
         // GET: Category
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return this.View(this.categoryService.GetAll());
         }
 
         // GET: Category/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Category category = db.Categories.Find(id);
+            var category = this.categoryService.GetById(id);
             if (category == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
 
-            return View(category);
+            return this.View(category);
         }
 
         // GET: Category/Create
         public ActionResult Create()
         {
-            return View();
+            return this.View();
         }
 
         // POST: Category/Create
@@ -46,33 +50,34 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name")] Category category)
+        public ActionResult Create(CategoryDto category)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.Categories.Add(category);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.categoryService.Create(category);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.CategorySuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            return View(category);
+            return this.View(category);
         }
 
         // GET: Category/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = this.categoryService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(category);
+            return this.View(model);
         }
 
         // POST: Category/Edit/5
@@ -80,33 +85,35 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name")] Category category)
+        public ActionResult Edit(CategoryDto category)
         {
-            if (ModelState.IsValid)
+            IServiceResult<CategoryDto> result = null;
+            if (this.ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                result = this.categoryService.Update(category);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.CategorySuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            return View(category);
+            this.ProcessNotifications(result);
+
+            return this.View(category);
         }
 
         // GET: Category/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.categoryService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(category);
+            return this.View(model);
         }
 
         // POST: Category/Delete/5
@@ -114,20 +121,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.categoryService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.CategorySuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
         }
     }
 }

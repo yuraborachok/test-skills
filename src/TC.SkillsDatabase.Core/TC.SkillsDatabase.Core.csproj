@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -67,6 +70,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Models\DTO\CategoryDto.cs" />
+    <Compile Include="Models\DTO\ExtensionMethods.cs" />
     <Compile Include="Models\DTO\LocationDto.cs" />
     <Compile Include="Models\DTO\ResourceDto.cs" />
     <Compile Include="Models\DTO\ResourceRoleDto.cs" />
@@ -85,6 +89,7 @@
     <Compile Include="Results\IServiceResult.cs" />
     <Compile Include="Results\NotificationMessage.cs" />
     <Compile Include="Results\ServiceResult.cs" />
+    <Compile Include="Utils\TypeUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

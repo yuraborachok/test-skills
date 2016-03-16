@@ -1,4 +1,4 @@
-﻿@model TC.SkillsDatabase.Core.Models.DbModels.Skill
+﻿@model TC.SkillsDatabase.Web.ViewModels.SkillViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -29,8 +29,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, "CategoryId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                <select name="@Html.Name("CategoryId")"
+                        id="@Html.Id("CategoryId")"
+                        class="form-control"
+                        data-val="true">
+                    @foreach (var category in Model.Categories)
+                    {
+                        <option @(category.Id == Model.CategoryId ? "selected = selected" : "") value="@category.Id">
+                            @category.Name
+                        </option>
+                    }
+                </select>
             </div>
         </div>
 
