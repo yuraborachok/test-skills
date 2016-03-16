@@ -69,12 +69,24 @@
   <ItemGroup>
     <Compile Include="AutoMapperConfiguration.cs" />
     <Compile Include="InjectionConfig.cs" />
-    <Compile Include="Interfaces\IResourceRoleService.cs" />
-    <Compile Include="Interfaces\ITeamService.cs" />
+    <Compile Include="Interfaces\ICategoryService.cs" />
+    <Compile Include="Interfaces\ILocationService.cs" />
+    <Compile Include="Interfaces\IResourceService.cs" />
+    <Compile Include="Interfaces\IResourceSkillService.cs" />
+    <Compile Include="Interfaces\ISkillLevelService.cs" />
+    <Compile Include="Interfaces\ISkillService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Interfaces\ITeamService.cs" />
+    <Compile Include="Interfaces\IResourceRoleService.cs" />
     <Compile Include="Services\ResourceRoleService.cs" />
+    <Compile Include="Services\ResourceService.cs" />
+    <Compile Include="Services\ResourceSkillService.cs" />
+    <Compile Include="Services\SkillLevelService.cs" />
+    <Compile Include="Services\SkillService.cs" />
     <Compile Include="Services\TeamService.cs" />
   </ItemGroup>
   <ItemGroup />

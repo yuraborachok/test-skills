@@ -9,14 +9,17 @@
     {
         public static void Configure()
         {
-            Mapper.CreateMap<Category, CategoryDto>();
-            Mapper.CreateMap<CategoryDto, Category>();
-
-            Mapper.CreateMap<ResourceRole, ResourceRoleDto>();
-            Mapper.CreateMap<ResourceRoleDto, ResourceRole>();
-
-            Mapper.CreateMap<Team, TeamDto>();
-            Mapper.CreateMap<TeamDto, Team>();
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Location, LocationDto>().ReverseMap();
+                cfg.CreateMap<Category, CategoryDto>().ReverseMap();
+                cfg.CreateMap<Team, TeamDto>().ReverseMap();
+                cfg.CreateMap<ResourceRole, ResourceRoleDto>().ReverseMap();
+                cfg.CreateMap<ResourceSkill, ResourceSkillDto>().ReverseMap();
+                cfg.CreateMap<Skill, SkillDto>().ReverseMap();
+                cfg.CreateMap<SkillLevel, SkillLevelDto>().ReverseMap();
+                cfg.CreateMap<Resource, ResourceDto>().ReverseMap();
+            });
         }
     }
 }

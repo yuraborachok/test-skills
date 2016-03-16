@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DublicateLocationName" xml:space="preserve">
+    <value>DublicateLocationName</value>
+  </data>
   <data name="CategorySuccesfullyCreated" xml:space="preserve">
     <value>CategorySuccesfullyCreated</value>
   </data>
@@ -135,6 +138,15 @@
   <data name="DublicateTeamName" xml:space="preserve">
     <value>DublicateTeamName</value>
   </data>
+  <data name="LocationSuccesfullyCreated" xml:space="preserve">
+    <value>LocationSuccesfullyCreated</value>
+  </data>
+  <data name="LocationSuccesfullyDeleted" xml:space="preserve">
+    <value>LocationSuccesfullyDeleted</value>
+  </data>
+  <data name="LocationSuccesfullyUpdated" xml:space="preserve">
+    <value>LocationSuccesfullyUpdated</value>
+  </data>
   <data name="ResourceRoleSuccesfullyCreated" xml:space="preserve">
     <value>ResourceRoleSuccesfullyCreated</value>
   </data>
@@ -152,5 +164,47 @@
   </data>
   <data name="TeamSuccesfullyUpdated" xml:space="preserve">
     <value>TeamSuccesfullyUpdated</value>
+  </data>
+  <data name="DuplicateSkillLevelName" xml:space="preserve">
+    <value>DuplicateSkillLevelName</value>
+  </data>
+  <data name="DuplicateSkillName" xml:space="preserve">
+    <value>DuplicateSkillName</value>
+  </data>
+  <data name="ResourcelSuccesfullyCreated" xml:space="preserve">
+    <value>ResourcelSuccesfullyCreated</value>
+  </data>
+  <data name="ResourcelSuccesfullyDeleted" xml:space="preserve">
+    <value>ResourcelSuccesfullyDeleted</value>
+  </data>
+  <data name="ResourcelSuccesfullyUpdated" xml:space="preserve">
+    <value>ResourcelSuccesfullyUpdated</value>
+  </data>
+  <data name="ResourceSkillSuccesfullyCreated" xml:space="preserve">
+    <value>ResourceSkillSuccesfullyCreated</value>
+  </data>
+  <data name="ResourceSkillSuccesfullyDeleted" xml:space="preserve">
+    <value>ResourceSkillSuccesfullyDeleted</value>
+  </data>
+  <data name="ResourceSkillSuccesfullyUpdated" xml:space="preserve">
+    <value>ResourceSkillSuccesfullyUpdated</value>
+  </data>
+  <data name="SkillLevelSuccesfullyCreated" xml:space="preserve">
+    <value>SkillLevelSuccesfullyCreated</value>
+  </data>
+  <data name="SkillLevelSuccesfullyDeleted" xml:space="preserve">
+    <value>SkillLevelSuccesfullyDeleted</value>
+  </data>
+  <data name="SkillLevelSuccesfullyUpdated" xml:space="preserve">
+    <value>SkillLevelSuccesfullyUpdated</value>
+  </data>
+  <data name="SkillSuccesfullyCreated" xml:space="preserve">
+    <value>SkillSuccesfullyCreated</value>
+  </data>
+  <data name="SkillSuccesfullyDeleted" xml:space="preserve">
+    <value>SkillSuccesfullyDeleted</value>
+  </data>
+  <data name="SkillSuccesfullyUpdated" xml:space="preserve">
+    <value>SkillSuccesfullyUpdated</value>
   </data>
 </root>
