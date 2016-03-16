@@ -15,6 +15,7 @@
             var container = new ServiceContainer();
 
             container.Register<ITeamService, TeamService>(new PerScopeLifetime());
+            container.Register<IResourceRoleService, ResourceRoleService>(new PerScopeLifetime());
 
             container.Register((serviceFactory) => new SkillsDatabaseContext(), new PerScopeLifetime());
             container.Register(typeof(IRepository<>), typeof(Repository<>));
