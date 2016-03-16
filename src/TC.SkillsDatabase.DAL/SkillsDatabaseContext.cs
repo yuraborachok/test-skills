@@ -3,6 +3,7 @@ namespace TC.SkillsDatabase.DAL
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
     using System.Reflection;
     using Core.Models.DbModels;
@@ -15,6 +16,7 @@ namespace TC.SkillsDatabase.DAL
         public SkillsDatabaseContext()
             : base("name=SkillsDb")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         public virtual DbSet<Category> Categories { get; set; }
@@ -62,6 +64,10 @@ namespace TC.SkillsDatabase.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            this.Configuration.LazyLoadingEnabled = false;
+
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.Skills)
                 .WithRequired(e => e.Category)

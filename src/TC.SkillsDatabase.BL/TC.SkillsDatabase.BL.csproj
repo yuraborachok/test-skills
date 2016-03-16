@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\IResourceSkillService.cs" />
     <Compile Include="Interfaces\ISkillLevelService.cs" />
     <Compile Include="Interfaces\ISkillService.cs" />
+    <Compile Include="Interfaces\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
@@ -88,6 +89,7 @@
     <Compile Include="Services\SkillLevelService.cs" />
     <Compile Include="Services\SkillService.cs" />
     <Compile Include="Services\TeamService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

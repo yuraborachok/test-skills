@@ -1,6 +1,7 @@
 ﻿namespace TC.SkillsDatabase.Web
 {
     using System;
+    using Core.Models.DbModels;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin;
@@ -25,15 +26,16 @@
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                ExpireTimeSpan = TimeSpan.FromDays(90),
                 Provider = new CookieAuthenticationProvider
                 {
-                    // Enables the application to validate the security stamp when the user logs in.
-                    // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-                        validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, User, int>(
+                                       validateInterval: TimeSpan.FromDays(90),
+                                       regenerateIdentityCallback: (manager, user) => user.GenerateUserIdentityAsync(manager), 
+                                       getUserIdCallback: id => id.GetUserId<int>())
                 }
-            });            
+            });
+
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

@@ -78,6 +78,7 @@
     <Compile Include="Models\DTO\SkillDto.cs" />
     <Compile Include="Models\DTO\SkillLevelDto.cs" />
     <Compile Include="Models\DTO\TeamDto.cs" />
+    <Compile Include="Models\DTO\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>

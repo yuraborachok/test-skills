@@ -48,7 +48,7 @@
 
         public CustomRole(string name)
         {
-            Name = name;
+            this.Name = name;
         }
     }
 }

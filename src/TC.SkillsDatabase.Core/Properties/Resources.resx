@@ -207,4 +207,7 @@
   <data name="SkillSuccesfullyUpdated" xml:space="preserve">
     <value>SkillSuccesfullyUpdated</value>
   </data>
+  <data name="ProfileSuccesfullyUpdated" xml:space="preserve">
+    <value>ProfileSuccesfullyUpdated</value>
+  </data>
 </root>

@@ -13,7 +13,7 @@ namespace TC.SkillsDatabase.Web
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            this.ConfigureAuth(app);
             AutoMapperConfiguration.Configure();
             var container = InjectionConfig.RegisterAllDependencies();
             container.RegisterControllers();
