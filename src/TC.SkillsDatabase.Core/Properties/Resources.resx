@@ -207,4 +207,7 @@
   <data name="SkillSuccesfullyUpdated" xml:space="preserve">
     <value>SkillSuccesfullyUpdated</value>
   </data>
+  <data name="DublicateResourceName" xml:space="preserve">
+    <value>DublicateResourceName</value>
+  </data>
 </root>
