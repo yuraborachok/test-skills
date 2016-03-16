@@ -13,6 +13,7 @@
             var container = new ServiceContainer();
 
             container.Register<ITeamService, TeamService>(new PerScopeLifetime());
+            container.Register<ILocationService, LocationService>(new PerScopeLifetime());
 
             container.Register((serviceFactory) => new SkillsDatabaseContext(), new PerScopeLifetime());
             container.Register(typeof(IRepository<>), typeof(Repository<>));

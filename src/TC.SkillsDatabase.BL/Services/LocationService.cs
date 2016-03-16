@@ -6,6 +6,8 @@
     using AutoMapper;
     using Core.Models.DbModels;
     using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
     using DAL;
     using Interfaces;
 
@@ -28,28 +30,62 @@
             return Mapper.Map<LocationDto>(this.locationRepository.GetAll().FirstOrDefault(s => s.Id == id));
         }
 
-        public LocationDto Create(LocationDto locationDto)
+        public IServiceResult<LocationDto> Create(LocationDto locationDto)
         {
-            var location = Mapper.Map<Location>(locationDto);
-            this.locationRepository.Insert(location);
-            var result = Mapper.Map<LocationDto>(location);
+            var result = this.Validate(locationDto);
+
+            if (result.IsValid)
+            {
+                var location = Mapper.Map<Location>(locationDto);
+                this.locationRepository.Insert(location);
+
+                result.Entity = Mapper.Map<LocationDto>(location);
+            }
 
             return result;
         }
 
-        public LocationDto Update(LocationDto locationDto)
+        public IServiceResult<LocationDto> Update(LocationDto locationDto)
         {
-            var location = Mapper.Map<Location>(locationDto);
-            this.locationRepository.Update(location);
-            var result = Mapper.Map<LocationDto>(location);
+            var result = this.Validate(locationDto);
+
+            if (result.IsValid)
+            {
+                var location = Mapper.Map<Location>(locationDto);
+                this.locationRepository.Update(location);
+
+                result.Entity = Mapper.Map<LocationDto>(location);
+            }
 
             return result;
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            var category = this.locationRepository.GetAll().FirstOrDefault(s => s.Id == id);
-            this.locationRepository.Delete(category);
+            var location = this.locationRepository.GetAll().FirstOrDefault(s => s.Id == id);
+            if (location != null)
+            {
+                this.locationRepository.Delete(location);
+            }
+
+            return true;
+        }
+
+        private IServiceResult<LocationDto> Validate(LocationDto locationDto)
+        {
+            var result = new ServiceResult<LocationDto>
+            {
+                Entity = locationDto
+            };
+
+            // Validate Location Name
+            var location = this.locationRepository.GetAll().FirstOrDefault(u => u.Name == locationDto.Name && locationDto.Id != u.Id);
+            if (location != null)
+            {
+                result.Errors.Add(new NotificationMessage("LocationName", string.Format(Resources.DublicateLocationName, locationDto.Name)));
+            }
+
+            return result;
         }
     }
 }

@@ -9,15 +9,12 @@
     {
         public static void Configure()
         {
-            Mapper.CreateMap<Category, CategoryDto>();
-            Mapper.CreateMap<CategoryDto, Category>();
-
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<Location, LocationDto>().ReverseMap();
+                cfg.CreateMap<Category, CategoryDto>().ReverseMap();
+                cfg.CreateMap<Team, TeamDto>().ReverseMap();
             });
-            Mapper.CreateMap<Team, TeamDto>();
-            Mapper.CreateMap<TeamDto, Team>();
         }
     }
 }

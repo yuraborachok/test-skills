@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Core.Models.DTO;
+    using Core.Results;
 
     public interface ILocationService
     {
@@ -10,10 +11,10 @@
 
         LocationDto GetById(int id);
 
-        LocationDto Create(LocationDto locationDto);
+        IServiceResult<LocationDto> Create(LocationDto locationDto);
 
-        LocationDto Update(LocationDto locationDto);
+        IServiceResult<LocationDto> Update(LocationDto locationDto);
 
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

@@ -8,14 +8,14 @@
     using BL.Interfaces;
     using Core.Models.DbModels;
     using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
     using DAL;
 
-    public class LocationController : Controller
+    public class LocationController : BaseAbstractController
     {
         private readonly ILocationService locationService;
 
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
-     
         public LocationController(ILocationService locationService)
         {
             this.locationService = locationService;
@@ -56,10 +56,17 @@
             if (this.ModelState.IsValid)
             {
                 var result = this.locationService.Create(location);
-                return this.RedirectToAction("Index");
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.LocationSuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            return View(location);
+            return this.View(location);
         }
 
         // GET: Location/Edit/5
@@ -81,30 +88,33 @@
         [ValidateAntiForgeryToken]
         public ActionResult Edit(LocationDto location)
         {
+            IServiceResult<LocationDto> result = null;
             if (this.ModelState.IsValid)
             {
-                var result = this.locationService.Update(location);
-                return RedirectToAction("Index");
+                result = this.locationService.Update(location);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.LocationSuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            return View(location);
+            this.ProcessNotifications(result);
+
+            return this.View(location);
         }
 
         // GET: Location/Delete/5
         public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.locationService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Location location = db.Locations.Find(id);
-            if (location == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(location);
+            return this.View(model);
         }
 
         // POST: Location/Delete/5
@@ -112,20 +122,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Location location = db.Locations.Find(id);
-            db.Locations.Remove(location);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.locationService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.LocationSuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
         }
     }
 }

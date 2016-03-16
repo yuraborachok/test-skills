@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DublicateLocationName" xml:space="preserve">
+    <value>DublicateLocationName</value>
+  </data>
   <data name="DublicateTeamName" xml:space="preserve">
     <value>DublicateTeamName</value>
+  </data>
+  <data name="LocationSuccesfullyCreated" xml:space="preserve">
+    <value>LocationSuccesfullyCreated</value>
+  </data>
+  <data name="LocationSuccesfullyDeleted" xml:space="preserve">
+    <value>LocationSuccesfullyDeleted</value>
+  </data>
+  <data name="LocationSuccesfullyUpdated" xml:space="preserve">
+    <value>LocationSuccesfullyUpdated</value>
   </data>
   <data name="TeamSuccesfullyCreated" xml:space="preserve">
     <value>TeamSuccesfullyCreated</value>
