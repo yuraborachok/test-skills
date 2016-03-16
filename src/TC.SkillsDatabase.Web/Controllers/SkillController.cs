@@ -1,46 +1,47 @@
 ﻿namespace TC.SkillsDatabase.Web.Controllers
 {
     using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
-    using Core.Models.DbModels;
-    using DAL;
+    using BL.Interfaces;
+    using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
+    using Core.Utils;
+    using ViewModels;
 
-    public class SkillController : Controller
+    public class SkillController : BaseAbstractController
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+        private readonly ISkillService skillService;
+        private readonly ICategoryService categoryService;
+
+        public SkillController(ISkillService skillService, ICategoryService categoryService)
+        {
+            this.skillService = skillService;
+            this.categoryService = categoryService;
+        }
 
         // GET: Skill
         public ActionResult Index()
         {
-            var skills = db.Skills.Include(s => s.Category);
-            return View(skills.ToList());
+            return this.View(this.skillService.GetAll());
         }
 
         // GET: Skill/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            var category = this.skillService.GetById(id);
+            if (category == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Skill skill = db.Skills.Find(id);
-            if (skill == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(skill);
+            return this.View(category);
         }
 
         // GET: Skill/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
-            return View();
+            return this.View(this.PopulateViewModel(new SkillDto()));
         }
 
         // POST: Skill/Create
@@ -48,35 +49,34 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,CategoryId,Description,IsLanguageSkill")] Skill skill)
+        public ActionResult Create(SkillDto skill)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.Skills.Add(skill);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.skillService.Create(skill);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.SkillSuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", skill.CategoryId);
-            return View(skill);
+            return this.View(this.PopulateViewModel(skill));
         }
 
         // GET: Skill/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = this.skillService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Skill skill = db.Skills.Find(id);
-            if (skill == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", skill.CategoryId);
-            return View(skill);
+            return this.View(this.PopulateViewModel(model));
         }
 
         // POST: Skill/Edit/5
@@ -84,34 +84,35 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,CategoryId,Description,IsLanguageSkill")] Skill skill)
+        public ActionResult Edit(SkillDto skill)
         {
-            if (ModelState.IsValid)
+            IServiceResult<SkillDto> result = null;
+            if (this.ModelState.IsValid)
             {
-                db.Entry(skill).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                result = this.skillService.Update(skill);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.SkillSuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", skill.CategoryId);
-            return View(skill);
+            this.ProcessNotifications(result);
+
+            return this.View(this.PopulateViewModel(skill));
         }
 
         // GET: Skill/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.skillService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Skill skill = db.Skills.Find(id);
-            if (skill == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(skill);
+            return this.View(model);
         }
 
         // POST: Skill/Delete/5
@@ -119,20 +120,24 @@
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Skill skill = db.Skills.Find(id);
-            db.Skills.Remove(skill);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.skillService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.SkillSuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
+        }
+
+        private SkillViewModel PopulateViewModel(SkillDto skillDto)
+        {
+            var skillViewModel = new SkillViewModel();
+            skillDto.ShallowConvert(skillViewModel);
+            skillViewModel.Categories = this.categoryService.GetAll();
+
+            return skillViewModel;
         }
     }
 }
