@@ -10,8 +10,14 @@
 
 namespace TC.SkillsDatabase.Core.Properties {
     using System;
-    
-    
+    using System.CodeDom.Compiler;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.Resources;
+    using System.Runtime.CompilerServices;
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -19,27 +25,27 @@ namespace TC.SkillsDatabase.Core.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-    [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+    [GeneratedCode("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [DebuggerNonUserCode()]
+    [CompilerGenerated()]
     public class Resources {
         
-        private static global::System.Resources.ResourceManager resourceMan;
+        private static ResourceManager resourceMan;
         
-        private static global::System.Globalization.CultureInfo resourceCulture;
+        private static CultureInfo resourceCulture;
         
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public static ResourceManager ResourceManager {
             get {
-                if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TC.SkillsDatabase.Core.Properties.Resources", typeof(Resources).Assembly);
+                if (ReferenceEquals(resourceMan, null)) {
+                    ResourceManager temp = new ResourceManager("TC.SkillsDatabase.Core.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -50,8 +56,8 @@ namespace TC.SkillsDatabase.Core.Properties {
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
-        [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        public static CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -124,6 +130,24 @@ namespace TC.SkillsDatabase.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DuplicateSkillLevelName.
+        /// </summary>
+        public static string DuplicateSkillLevelName {
+            get {
+                return ResourceManager.GetString("DuplicateSkillLevelName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DuplicateSkillName.
+        /// </summary>
+        public static string DuplicateSkillName {
+            get {
+                return ResourceManager.GetString("DuplicateSkillName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LocationSuccesfullyCreated.
         /// </summary>
         public static string LocationSuccesfullyCreated {
@@ -151,6 +175,33 @@ namespace TC.SkillsDatabase.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ResourcelSuccesfullyCreated.
+        /// </summary>
+        public static string ResourcelSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("ResourcelSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourcelSuccesfullyDeleted.
+        /// </summary>
+        public static string ResourcelSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("ResourcelSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourcelSuccesfullyUpdated.
+        /// </summary>
+        public static string ResourcelSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("ResourcelSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ResourceRoleSuccesfullyCreated.
         /// </summary>
         public static string ResourceRoleSuccesfullyCreated {
@@ -174,6 +225,87 @@ namespace TC.SkillsDatabase.Core.Properties {
         public static string ResourceRoleSuccesfullyUpdated {
             get {
                 return ResourceManager.GetString("ResourceRoleSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceSkillSuccesfullyCreated.
+        /// </summary>
+        public static string ResourceSkillSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("ResourceSkillSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceSkillSuccesfullyDeleted.
+        /// </summary>
+        public static string ResourceSkillSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("ResourceSkillSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceSkillSuccesfullyUpdated.
+        /// </summary>
+        public static string ResourceSkillSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("ResourceSkillSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillLevelSuccesfullyCreated.
+        /// </summary>
+        public static string SkillLevelSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("SkillLevelSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillLevelSuccesfullyDeleted.
+        /// </summary>
+        public static string SkillLevelSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("SkillLevelSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillLevelSuccesfullyUpdated.
+        /// </summary>
+        public static string SkillLevelSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("SkillLevelSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillSuccesfullyCreated.
+        /// </summary>
+        public static string SkillSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("SkillSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillSuccesfullyDeleted.
+        /// </summary>
+        public static string SkillSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("SkillSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SkillSuccesfullyUpdated.
+        /// </summary>
+        public static string SkillSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("SkillSuccesfullyUpdated", resourceCulture);
             }
         }
         

@@ -15,6 +15,10 @@
                 cfg.CreateMap<Category, CategoryDto>().ReverseMap();
                 cfg.CreateMap<Team, TeamDto>().ReverseMap();
                 cfg.CreateMap<ResourceRole, ResourceRoleDto>().ReverseMap();
+                cfg.CreateMap<ResourceSkill, ResourceSkillDto>().ReverseMap();
+                cfg.CreateMap<Skill, SkillDto>().ReverseMap();
+                cfg.CreateMap<SkillLevel, SkillLevelDto>().ReverseMap();
+                cfg.CreateMap<Resource, ResourceDto>().ReverseMap();
             });
         }
     }

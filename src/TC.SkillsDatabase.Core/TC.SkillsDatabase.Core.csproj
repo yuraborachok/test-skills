@@ -68,7 +68,11 @@
     </Compile>
     <Compile Include="Models\DTO\CategoryDto.cs" />
     <Compile Include="Models\DTO\LocationDto.cs" />
+    <Compile Include="Models\DTO\ResourceDto.cs" />
     <Compile Include="Models\DTO\ResourceRoleDto.cs" />
+    <Compile Include="Models\DTO\ResourceSkillDto.cs" />
+    <Compile Include="Models\DTO\SkillDto.cs" />
+    <Compile Include="Models\DTO\SkillLevelDto.cs" />
     <Compile Include="Models\DTO\TeamDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
