@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using Base;
     using Core.Models.DbModels;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.Owin;
@@ -14,37 +15,8 @@
     using reCAPTCHA.MVC;
 
     [Authorize]
-    public class AccountController : BaseAbstractController
+    public class AccountController : BaseSecurityAbstractController
     {
-        private ApplicationSignInManager signInManager;
-        private ApplicationUserManager userManager;
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return this.signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-
-            private set
-            {
-                this.signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return this.userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-
-            private set
-            {
-                this.userManager = value;
-            }
-        }
-
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -423,26 +395,6 @@
         public ActionResult ExternalLoginFailure()
         {
             return this.View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (this.userManager != null)
-                {
-                    this.userManager.Dispose();
-                    this.userManager = null;
-                }
-
-                if (this.signInManager != null)
-                {
-                    this.signInManager.Dispose();
-                    this.signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
         }
 
         #region Helpers

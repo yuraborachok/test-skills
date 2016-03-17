@@ -213,4 +213,16 @@
   <data name="ProfileSuccesfullyUpdated" xml:space="preserve">
     <value>ProfileSuccesfullyUpdated</value>
   </data>
+  <data name="DublicateUserEmail" xml:space="preserve">
+    <value>DublicateUserEmail</value>
+  </data>
+  <data name="UserSuccesfullyCreated" xml:space="preserve">
+    <value>UserSuccesfullyCreated</value>
+  </data>
+  <data name="UserSuccesfullyDeleted" xml:space="preserve">
+    <value>UserSuccesfullyDeleted</value>
+  </data>
+  <data name="UserSuccesfullyUpdated" xml:space="preserve">
+    <value>UserSuccesfullyUpdated</value>
+  </data>
 </root>

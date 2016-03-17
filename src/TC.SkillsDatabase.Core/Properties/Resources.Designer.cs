@@ -10,7 +10,7 @@
 
 namespace TC.SkillsDatabase.Core.Properties {
     using System;
-
+    
     
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
@@ -133,6 +133,15 @@ namespace TC.SkillsDatabase.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DublicateUserEmail.
+        /// </summary>
+        public static string DublicateUserEmail {
+            get {
+                return ResourceManager.GetString("DublicateUserEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DuplicateSkillLevelName.
         /// </summary>
         public static string DuplicateSkillLevelName {
@@ -187,7 +196,7 @@ namespace TC.SkillsDatabase.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ResourcelSuccesfullyCreated.
+        ///   Looks up a localized string similar to ResourceRoleSuccesfullyCreated.
         /// </summary>
         public static string ResourceRoleSuccesfullyCreated {
             get {
@@ -345,6 +354,33 @@ namespace TC.SkillsDatabase.Core.Properties {
         public static string TeamSuccesfullyUpdated {
             get {
                 return ResourceManager.GetString("TeamSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UserSuccesfullyCreated.
+        /// </summary>
+        public static string UserSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("UserSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UserSuccesfullyDeleted.
+        /// </summary>
+        public static string UserSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("UserSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UserSuccesfullyUpdated.
+        /// </summary>
+        public static string UserSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("UserSuccesfullyUpdated", resourceCulture);
             }
         }
     }
