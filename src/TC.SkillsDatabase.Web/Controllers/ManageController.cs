@@ -86,6 +86,7 @@
                 Logins = await this.UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await this.AuthenticationManager.TwoFactorBrowserRememberedAsync(this.User.Identity.GetUserId())
             };
+
             return this.View(model);
         }
 

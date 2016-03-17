@@ -11,6 +11,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Models;
+    using reCAPTCHA.MVC;
 
     [Authorize]
     public class AccountController : BaseAbstractController
@@ -49,12 +50,14 @@
         public ActionResult Login(string returnUrl)
         {
             this.ViewBag.ReturnUrl = returnUrl;
+
             return this.View();
         }
 
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
+        [CaptchaValidator]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, bool captchaValid)
         {
@@ -156,9 +159,15 @@
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
+        [CaptchaValidator]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, bool captchaValid)
         {
+            if (!captchaValid)
+            {
+                this.ProcessError("You must confirm that you are not a robot!");
+            }
+
             if (this.ModelState.IsValid)
             {
                 var user = new User { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
