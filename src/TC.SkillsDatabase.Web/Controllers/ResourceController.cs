@@ -5,44 +5,52 @@
     using System.Linq;
     using System.Net;
     using System.Web.Mvc;
+    using BL.Interfaces;
     using Core.Models.DbModels;
+    using Core.Models.DTO;
+    using Core.Properties;
+    using Core.Results;
+    using Core.Utils;
     using DAL;
+    using ViewModels;
 
-    public class ResourceController : Controller
+    public class ResourceController : BaseAbstractController
     {
-        private SkillsDatabaseContext db = new SkillsDatabaseContext();
+        private readonly IResourceService resourceService;
+        private readonly ITeamService teamService;
+        private readonly ILocationService locationService;
+        private readonly IResourceRoleService resourceRoleService;
+
+        public ResourceController(IResourceService resourceService, ITeamService teamService, ILocationService locationService, IResourceRoleService resourceRoleService)
+        {
+            this.resourceService = resourceService;
+            this.teamService = teamService;
+            this.locationService = locationService;
+            this.resourceRoleService = resourceRoleService;
+        }
 
         // GET: Resource
         public ActionResult Index()
         {
-            var resources = db.Resources.Include(r => r.Location).Include(r => r.ResourceRole).Include(r => r.Team);
-            return View(resources.ToList());
+            return this.View(this.resourceService.GetAll());
         }
 
         // GET: Resource/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            Resource resource = db.Resources.Find(id);
+            var resource = this.resourceService.GetById(id);
             if (resource == null)
             {
-                return HttpNotFound();
+                return this.HttpNotFound();
             }
 
-            return View(resource);
+            return this.View(resource);
         }
 
         // GET: Resource/Create
         public ActionResult Create()
         {
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name");
-            ViewBag.ResourceRoleId = new SelectList(db.ResourceRoles, "Id", "Name");
-            ViewBag.TeamId = new SelectList(db.Teams, "Id", "Name");
-            return View();
+            return this.View(this.PopulateViewModel(new ResourceDto()));
         }
 
         // POST: Resource/Create
@@ -50,39 +58,34 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,TeamId,LocationId,ResourceRoleId,Manager")] Resource resource)
+        public ActionResult Create(ResourceDto resource)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                db.Resources.Add(resource);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var result = this.resourceService.Create(resource);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.ResourcelSuccesfullyCreated);
+                    return this.RedirectToAction("Index");
+                }
+
+                this.ProcessNotifications(result);
             }
 
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name", resource.LocationId);
-            ViewBag.ResourceRoleId = new SelectList(db.ResourceRoles, "Id", "Name", resource.ResourceRoleId);
-            ViewBag.TeamId = new SelectList(db.Teams, "Id", "Name", resource.TeamId);
-            return View(resource);
+            return this.View(this.PopulateViewModel(resource));
         }
 
         // GET: Resource/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            var model = this.resourceService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Resource resource = db.Resources.Find(id);
-            if (resource == null)
-            {
-                return HttpNotFound();
-            }
-
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name", resource.LocationId);
-            ViewBag.ResourceRoleId = new SelectList(db.ResourceRoles, "Id", "Name", resource.ResourceRoleId);
-            ViewBag.TeamId = new SelectList(db.Teams, "Id", "Name", resource.TeamId);
-            return View(resource);
+            return this.View(this.PopulateViewModel(model));
         }
 
         // POST: Resource/Edit/5
@@ -90,57 +93,62 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,TeamId,LocationId,ResourceRoleId,Manager")] Resource resource)
+        public ActionResult Edit(ResourceDto resource)
         {
-            if (ModelState.IsValid)
+            IServiceResult<ResourceDto> result = null;
+            if (this.ModelState.IsValid)
             {
-                db.Entry(resource).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                result = this.resourceService.Update(resource);
+
+                if (result.IsValid)
+                {
+                    this.ProcessMessage(Resources.ResourcelSuccesfullyUpdated);
+                    return this.RedirectToAction("Index");
+                }
             }
 
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Name", resource.LocationId);
-            ViewBag.ResourceRoleId = new SelectList(db.ResourceRoles, "Id", "Name", resource.ResourceRoleId);
-            ViewBag.TeamId = new SelectList(db.Teams, "Id", "Name", resource.TeamId);
-            return View(resource);
+            this.ProcessNotifications(result);
+
+            return this.View(this.PopulateViewModel(resource));
         }
 
         // GET: Resource/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            var model = this.resourceService.GetById(id);
+            if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.HttpNotFound();
             }
 
-            Resource resource = db.Resources.Find(id);
-            if (resource == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(resource);
+            return this.View(model);
         }
-
+        
         // POST: Resource/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Resource resource = db.Resources.Find(id);
-            db.Resources.Remove(resource);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            var result = this.resourceService.Delete(id);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
+            if (result)
             {
-                db.Dispose();
+                this.ProcessMessage(Resources.ResourcelSuccesfullyDeleted);
+                return this.RedirectToAction("Index");
             }
 
-            base.Dispose(disposing);
+            return this.RedirectToAction("Delete", new { id });
+        }
+
+        private ResourceViewModel PopulateViewModel(ResourceDto resourceDto)
+        {
+            var resourceViewModel = new ResourceViewModel();
+            resourceDto.ShallowConvert(resourceViewModel);
+            resourceViewModel.Teams = this.teamService.GetAll();
+            resourceViewModel.ResourceRoles = this.resourceRoleService.GetAll();
+            resourceViewModel.Locations = this.locationService.GetAll();
+
+            return resourceViewModel;
         }
     }
 }
