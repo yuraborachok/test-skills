@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TC.SkillsDatabase.Core.Models.DTO.ResourceDto>
+﻿@model TC.SkillsDatabase.Web.ViewModels.ResourceSearchViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -7,30 +7,50 @@
 
 <h2>Index</h2>
 
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Index", "Resource", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Get, new { @class = "form-inline", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <label for="resourceText">Resource Text</label>
+                            <input type="Search" placeholder="Resource Text..." class="form-control" name="resourceSearchText" value="@Model.ResourceSearchText" />
+                        </div>
+                        <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.LocationName)
+            @Html.DisplayNameFor(model => Model.Resources[0].LocationName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ResourceRoleName)
+            @Html.DisplayNameFor(model => Model.Resources[0].ResourceRoleName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TeamName)
+            @Html.DisplayNameFor(model => Model.Resources[0].TeamName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => Model.Resources[0].Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Manager)
+            @Html.DisplayNameFor(model => Model.Resources[0].Manager)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Resources) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.LocationName)

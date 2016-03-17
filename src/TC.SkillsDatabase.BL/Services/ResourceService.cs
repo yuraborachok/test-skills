@@ -5,6 +5,8 @@
     using System.Data.Entity;
     using System.Linq;
     using AutoMapper;
+    using AutoMapper.Internal;
+    using AutoMapper.QueryableExtensions;
     using Core.Models.DbModels;
     using Core.Models.DTO;
     using Core.Properties;
@@ -24,6 +26,29 @@
         public IEnumerable<ResourceDto> GetAll()
         {
             return Mapper.Map<List<ResourceDto>>(this.resourceRepository.GetAll());
+        }
+
+        public IEnumerable<ResourceDto> GetAll(string resourceText)
+        {
+            var result = new List<ResourceDto>();
+            IQueryable<Resource> resources;
+            if (!string.IsNullOrEmpty(resourceText))
+            {
+                resources = this.resourceRepository.GetAll()
+                                .Where(r => r.Team.Name.Contains(resourceText) || r.Name.Contains(resourceText) || r.Manager.Contains(resourceText) || r.ResourceRole.Name.Contains(resourceText))
+                                .Include(r => r.Team).Include(r => r.ResourceRole).Include(r => r.Location);
+            }
+            else
+            {
+                resources = this.resourceRepository.GetAll().Include(r => r.Team).Include(r => r.ResourceRole).Include(r => r.Location);
+            }
+
+            foreach (var resource in resources)
+            {
+                result.Add(resource.ToDto());
+            }
+
+            return result;
         }
 
         public ResourceDto GetById(int id)

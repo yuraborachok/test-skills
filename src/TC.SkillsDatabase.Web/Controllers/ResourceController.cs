@@ -30,9 +30,9 @@
         }
 
         // GET: Resource
-        public ActionResult Index()
+        public ActionResult Index(string resourceSearchText)
         {
-            return this.View(this.resourceService.GetAll());
+            return this.View(new ResourceSearchViewModel() { ResourceSearchText  = resourceSearchText, Resources = this.resourceService.GetAll(resourceSearchText).ToList() });
         }
 
         // GET: Resource/Details/5
@@ -123,7 +123,7 @@
 
             return this.View(model);
         }
-        
+
         // POST: Resource/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
