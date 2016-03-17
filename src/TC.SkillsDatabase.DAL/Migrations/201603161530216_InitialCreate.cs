@@ -107,7 +107,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.CustomRoles",
+                "dbo.CustomRole",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -116,7 +116,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.CustomUserRoles",
+                "dbo.CustomUserRole",
                 c => new
                     {
                         RoleId = c.Int(nullable: false),
@@ -124,7 +124,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                         CustomRole_Id = c.Int(),
                     })
                 .PrimaryKey(t => new { t.RoleId, t.UserId })
-                .ForeignKey("dbo.CustomRoles", t => t.CustomRole_Id)
+                .ForeignKey("dbo.CustomRole", t => t.CustomRole_Id)
                 .ForeignKey("dbo.User", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.CustomRole_Id);
@@ -151,7 +151,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.CustomUserClaims",
+                "dbo.CustomUserClaim",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -164,7 +164,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.CustomUserLogins",
+                "dbo.CustomUserLogin",
                 c => new
                     {
                         UserId = c.Int(nullable: false, identity: true),
@@ -179,10 +179,10 @@ namespace TC.SkillsDatabase.DAL.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.CustomUserRoles", "UserId", "dbo.User");
-            DropForeignKey("dbo.CustomUserLogins", "User_Id", "dbo.User");
-            DropForeignKey("dbo.CustomUserClaims", "UserId", "dbo.User");
-            DropForeignKey("dbo.CustomUserRoles", "CustomRole_Id", "dbo.CustomRoles");
+            DropForeignKey("dbo.CustomUserRole", "UserId", "dbo.User");
+            DropForeignKey("dbo.CustomUserLogin", "User_Id", "dbo.User");
+            DropForeignKey("dbo.CustomUserClaim", "UserId", "dbo.User");
+            DropForeignKey("dbo.CustomUserRole", "CustomRole_Id", "dbo.CustomRole");
             DropForeignKey("dbo.Skill", "CategoryId", "dbo.Category");
             DropForeignKey("dbo.ResourceSkill", "SkillId", "dbo.Skill");
             DropForeignKey("dbo.ResourceSkill", "SkillLevelId", "dbo.SkillLevel");
@@ -190,10 +190,10 @@ namespace TC.SkillsDatabase.DAL.Migrations
             DropForeignKey("dbo.ResourceSkill", "ResourceId", "dbo.Resource");
             DropForeignKey("dbo.Resource", "ResourceRoleId", "dbo.ResourceRole");
             DropForeignKey("dbo.Resource", "LocationId", "dbo.Location");
-            DropIndex("dbo.CustomUserLogins", new[] { "User_Id" });
-            DropIndex("dbo.CustomUserClaims", new[] { "UserId" });
-            DropIndex("dbo.CustomUserRoles", new[] { "CustomRole_Id" });
-            DropIndex("dbo.CustomUserRoles", new[] { "UserId" });
+            DropIndex("dbo.CustomUserLogin", new[] { "User_Id" });
+            DropIndex("dbo.CustomUserClaim", new[] { "UserId" });
+            DropIndex("dbo.CustomUserRole", new[] { "CustomRole_Id" });
+            DropIndex("dbo.CustomUserRole", new[] { "UserId" });
             DropIndex("dbo.Resource", new[] { "ResourceRoleId" });
             DropIndex("dbo.Resource", new[] { "LocationId" });
             DropIndex("dbo.Resource", new[] { "TeamId" });
@@ -201,11 +201,11 @@ namespace TC.SkillsDatabase.DAL.Migrations
             DropIndex("dbo.ResourceSkill", new[] { "SkillId" });
             DropIndex("dbo.ResourceSkill", new[] { "ResourceId" });
             DropIndex("dbo.Skill", new[] { "CategoryId" });
-            DropTable("dbo.CustomUserLogins");
-            DropTable("dbo.CustomUserClaims");
+            DropTable("dbo.CustomUserLogin");
+            DropTable("dbo.CustomUserClaim");
             DropTable("dbo.User");
-            DropTable("dbo.CustomUserRoles");
-            DropTable("dbo.CustomRoles");
+            DropTable("dbo.CustomUserRole");
+            DropTable("dbo.CustomRole");
             DropTable("dbo.SkillLevel");
             DropTable("dbo.Team");
             DropTable("dbo.ResourceRole");

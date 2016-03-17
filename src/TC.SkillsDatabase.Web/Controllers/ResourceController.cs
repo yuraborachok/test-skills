@@ -66,7 +66,7 @@
 
                 if (result.IsValid)
                 {
-                    this.ProcessMessage(Resources.ResourcelSuccesfullyCreated);
+                    this.ProcessMessage(Resources.ResourceSuccesfullyCreated);
                     return this.RedirectToAction("Index");
                 }
 
@@ -102,7 +102,7 @@
 
                 if (result.IsValid)
                 {
-                    this.ProcessMessage(Resources.ResourcelSuccesfullyUpdated);
+                    this.ProcessMessage(Resources.ResourceSuccesfullyUpdated);
                     return this.RedirectToAction("Index");
                 }
             }
@@ -133,7 +133,7 @@
 
             if (result)
             {
-                this.ProcessMessage(Resources.ResourcelSuccesfullyDeleted);
+                this.ProcessMessage(Resources.ResourceSuccesfullyDeleted);
                 return this.RedirectToAction("Index");
             }
 

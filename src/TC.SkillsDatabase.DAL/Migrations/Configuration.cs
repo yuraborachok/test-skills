@@ -4,6 +4,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
+    using System.Security.Claims;
     using System.Text;
     using Core.Models.DbModels;
 
@@ -11,14 +12,71 @@ namespace TC.SkillsDatabase.DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            this.AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(SkillsDatabaseContext context)
         {
-            var team1 = new Team { Name = "Team 1"};
-            var team2 = new Team { Name = "Team 2"};
-            var team3 = new Team { Name = "Team 3"};
+
+            var roleAdministrator = new CustomRole("Admin");
+            var roleManager = new CustomRole("Manager");
+            var roleUser = new CustomRole("User");
+            context.Roles.AddOrUpdate(r => new { r.Name }, roleAdministrator, roleManager, roleUser);
+
+            this.SaveChanges(context);
+
+            // Password: 1!Admin
+            var userAdmin = new User
+            {
+                FirstName = "admin",
+                LastName = "admin",
+                Email = "admin@admin.com",
+                PasswordHash = "AESYKkF8s3NAgXiek9wk4t9lB00NmO42tYR5wlOr8CAVDeAmITX37yjJ9V3UZQumbA==",
+                SecurityStamp = "5672c730-46f6-4e17-a0c4-1a653a041690",
+                UserName = "admin@admin.com",
+                EmailConfirmed = true
+            };
+
+            var userManager = new User
+            {
+                FirstName = "manager",
+                LastName = "manager",
+                Email = "manager@manager.com",
+                PasswordHash = "AESYKkF8s3NAgXiek9wk4t9lB00NmO42tYR5wlOr8CAVDeAmITX37yjJ9V3UZQumbA==",
+                SecurityStamp = "5672c730-46f6-4e17-a0c4-1a653a041690",
+                UserName = "manager@manager.com",
+                EmailConfirmed = true
+            };
+
+            var userUser = new User
+            {
+                FirstName = "user",
+                LastName = "user",
+                Email = "user@user.com",
+                PasswordHash = "AESYKkF8s3NAgXiek9wk4t9lB00NmO42tYR5wlOr8CAVDeAmITX37yjJ9V3UZQumbA==",
+                SecurityStamp = "5672c730-46f6-4e17-a0c4-1a653a041690",
+                UserName = "user@user.com",
+                EmailConfirmed = true
+            };
+
+            context.Users.AddOrUpdate(u => new { u.Email }, userAdmin, userManager, userUser);
+
+            this.SaveChanges(context);
+
+            userAdmin.Roles.Add(new CustomUserRole() { RoleId = roleAdministrator.Id, UserId = userAdmin.Id });
+            userAdmin.Claims.Add(new CustomUserClaim { ClaimType = ClaimTypes.GivenName, ClaimValue = userAdmin.FirstName, UserId = userAdmin.Id });
+
+            userManager.Roles.Add(new CustomUserRole() { RoleId = roleManager.Id, UserId = userManager.Id });
+            userManager.Claims.Add(new CustomUserClaim { ClaimType = ClaimTypes.GivenName, ClaimValue = userManager.FirstName, UserId = userManager.Id });
+
+            userUser.Roles.Add(new CustomUserRole() { RoleId = roleUser.Id, UserId = userUser.Id });
+            userUser.Claims.Add(new CustomUserClaim { ClaimType = ClaimTypes.GivenName, ClaimValue = userUser.FirstName, UserId = userUser.Id });
+
+            this.SaveChanges(context);
+
+            var team1 = new Team { Name = "Team 1" };
+            var team2 = new Team { Name = "Team 2" };
+            var team3 = new Team { Name = "Team 3" };
 
             context.Teams.AddOrUpdate(o => o.Name, team1, team2, team3);
             this.SaveChanges(context);
@@ -29,7 +87,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
 
             context.Locations.AddOrUpdate(o => o.Name, location1, location2, location3);
             this.SaveChanges(context);
-            
+
             var resourceRole1 = new ResourceRole { Name = "Developer" };
             var resourceRole2 = new ResourceRole { Name = "QA" };
             var resourceRole3 = new ResourceRole { Name = "Manager" };
@@ -37,7 +95,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
             context.ResourceRoles.AddOrUpdate(o => o.Name, resourceRole1, resourceRole2, resourceRole3);
             this.SaveChanges(context);
 
-            var skillLevel0 = new SkillLevel { Name = "0 - None", Description = "None Skill", Value = 0 , IsForLanguageSkill = false};
+            var skillLevel0 = new SkillLevel { Name = "0 - None", Description = "None Skill", Value = 0, IsForLanguageSkill = false };
             var skillLevel1 = new SkillLevel { Name = "1 - Low", Description = "Low Skill", Value = 1, IsForLanguageSkill = false };
             var skillLevel2 = new SkillLevel { Name = "2 - Low", Description = "Low Skill", Value = 2, IsForLanguageSkill = false };
             var skillLevel3 = new SkillLevel { Name = "3 - Intermediate", Description = "Intermediate Skill", Value = 3, IsForLanguageSkill = false };
@@ -58,7 +116,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
             context.Categories.AddOrUpdate(o => o.Name, category1, category2, category3);
             this.SaveChanges(context);
 
-            var skill1 = new Skill { Name = "Presentations", CategoryId = category1.Id, Description = "Presentations", IsLanguageSkill = true};
+            var skill1 = new Skill { Name = "Presentations", CategoryId = category1.Id, Description = "Presentations", IsLanguageSkill = true };
             var skill2 = new Skill { Name = "Consultations", CategoryId = category1.Id, Description = "Consultations", IsLanguageSkill = true };
             var skill3 = new Skill { Name = "Verbal Communication", CategoryId = category1.Id, Description = "Verbal Communication", IsLanguageSkill = true };
 
@@ -128,7 +186,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                 SkillLevelId = skillLevel1.Id,
                 SkillLevelValue = skillLevel1.Value,
             };
-            
+
             var resourceSkill2 = new ResourceSkill
             {
                 ResourceId = resource1.Id,
@@ -136,7 +194,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
                 SkillLevelId = skillLevel2.Id,
                 SkillLevelValue = skillLevel2.Value,
             };
-            
+
             var resourceSkill3 = new ResourceSkill
             {
                 ResourceId = resource1.Id,
@@ -169,8 +227,8 @@ namespace TC.SkillsDatabase.DAL.Migrations
                     }
                 }
 
-                throw new DbEntityValidationException("Entity Validation Failed - errors follow:\n" + sb.ToString(), ex);
                 // Add the original exception as the innerException
+                throw new DbEntityValidationException("Entity Validation Failed - errors follow:\n" + sb, ex);
             }
         }
     }

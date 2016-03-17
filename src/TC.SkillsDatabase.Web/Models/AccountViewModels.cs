@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
+    using Core.Models.DTO;
 
     public class ExternalLoginConfirmationViewModel
     {
@@ -20,8 +21,11 @@
     public class SendCodeViewModel
     {
         public string SelectedProvider { get; set; }
+
         public ICollection<SelectListItem> Providers { get; set; }
+
         public string ReturnUrl { get; set; }
+
         public bool RememberMe { get; set; }
     }
 
@@ -33,6 +37,7 @@
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]
@@ -81,6 +86,14 @@
         [Display(Name = "Confirm password")]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(256)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(256)]
+        public string LastName { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -13,7 +13,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603150853552_InitialCreate"; }
+            get { return "201603161530216_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

@@ -19,6 +19,7 @@
                 cfg.CreateMap<Skill, SkillDto>().ReverseMap();
                 cfg.CreateMap<SkillLevel, SkillLevelDto>().ReverseMap();
                 cfg.CreateMap<Resource, ResourceDto>().ReverseMap();
+                cfg.CreateMap<User, UserDto>().ReverseMap();
             });
         }
     }

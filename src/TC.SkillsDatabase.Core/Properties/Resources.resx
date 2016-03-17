@@ -210,4 +210,7 @@
   <data name="DublicateResourceName" xml:space="preserve">
     <value>DublicateResourceName</value>
   </data>
+  <data name="ProfileSuccesfullyUpdated" xml:space="preserve">
+    <value>ProfileSuccesfullyUpdated</value>
+  </data>
 </root>
