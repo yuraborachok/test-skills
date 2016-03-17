@@ -33,19 +33,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => Model.Resources[0].LocationName)
+            @Html.DisplayNameFor(model => Model.Resources.FirstOrDefault().LocationName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => Model.Resources[0].ResourceRoleName)
+            @Html.DisplayNameFor(model => Model.Resources.FirstOrDefault().ResourceRoleName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => Model.Resources[0].TeamName)
+            @Html.DisplayNameFor(model => Model.Resources.FirstOrDefault().TeamName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => Model.Resources[0].Name)
+            @Html.DisplayNameFor(model => Model.Resources.FirstOrDefault().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => Model.Resources[0].Manager)
+            @Html.DisplayNameFor(model => Model.Resources.FirstOrDefault().Manager)
         </th>
         <th></th>
     </tr>
