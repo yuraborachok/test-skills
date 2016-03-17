@@ -1,4 +1,4 @@
-﻿@model TC.SkillsDatabase.Core.Models.DbModels.Resource
+﻿@model TC.SkillsDatabase.Web.ViewModels.ResourceViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -27,24 +27,51 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TeamId, "TeamId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TeamId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TeamId, "", new { @class = "text-danger" })
+                <select name="@Html.Name("TeamId")"
+                        id="@Html.Id("TeamId")"
+                        class="form-control"
+                        data-val="true">
+                    @foreach (var team in Model.Teams)
+                    {
+                        <option @(team.Id == Model.TeamId ? "selected = selected" : "") value="@team.Id">
+                            @team.Name
+                        </option>
+                    }
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.LocationId, "LocationId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+                <select name="@Html.Name("LocationId")"
+                        id="@Html.Id("LocationId")"
+                        class="form-control"
+                        data-val="true">
+                    @foreach (var location in Model.Locations)
+                    {
+                        <option @(location.Id == Model.LocationId ? "selected = selected" : "") value="@location.Id">
+                            @location.Name
+                        </option>
+                    }
+                </select>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ResourceRoleId, "ResourceRoleId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ResourceRoleId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ResourceRoleId, "", new { @class = "text-danger" })
+                <select name="@Html.Name("ResourceRoleId")"
+                        id="@Html.Id("ResourceRoleId")"
+                        class="form-control"
+                        data-val="true">
+                    @foreach (var resourceRole in Model.ResourceRoles)
+                    {
+                        <option @(resourceRole.Id == Model.ResourceRoleId ? "selected = selected" : "") value="@resourceRole.Id">
+                            @resourceRole.Name
+                        </option>
+                    }
+                </select>
             </div>
         </div>
 
