@@ -171,14 +171,14 @@
   <data name="DuplicateSkillName" xml:space="preserve">
     <value>DuplicateSkillName</value>
   </data>
-  <data name="ResourcelSuccesfullyCreated" xml:space="preserve">
-    <value>ResourcelSuccesfullyCreated</value>
+  <data name="ResourceSuccesfullyCreated" xml:space="preserve">
+    <value>ResourceSuccesfullyCreated</value>
   </data>
-  <data name="ResourcelSuccesfullyDeleted" xml:space="preserve">
-    <value>ResourcelSuccesfullyDeleted</value>
+  <data name="ResourceSuccesfullyDeleted" xml:space="preserve">
+    <value>ResourceSuccesfullyDeleted</value>
   </data>
-  <data name="ResourcelSuccesfullyUpdated" xml:space="preserve">
-    <value>ResourcelSuccesfullyUpdated</value>
+  <data name="ResourceSuccesfullyUpdated" xml:space="preserve">
+    <value>ResourceSuccesfullyUpdated</value>
   </data>
   <data name="ResourceSkillSuccesfullyCreated" xml:space="preserve">
     <value>ResourceSkillSuccesfullyCreated</value>

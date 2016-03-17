@@ -178,33 +178,6 @@ namespace TC.SkillsDatabase.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ResourcelSuccesfullyCreated.
-        /// </summary>
-        public static string ResourcelSuccesfullyCreated {
-            get {
-                return ResourceManager.GetString("ResourcelSuccesfullyCreated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ResourcelSuccesfullyDeleted.
-        /// </summary>
-        public static string ResourcelSuccesfullyDeleted {
-            get {
-                return ResourceManager.GetString("ResourcelSuccesfullyDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ResourcelSuccesfullyUpdated.
-        /// </summary>
-        public static string ResourcelSuccesfullyUpdated {
-            get {
-                return ResourceManager.GetString("ResourcelSuccesfullyUpdated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ResourceRoleSuccesfullyCreated.
         /// </summary>
         public static string ResourceRoleSuccesfullyCreated {
@@ -255,6 +228,33 @@ namespace TC.SkillsDatabase.Core.Properties {
         public static string ResourceSkillSuccesfullyUpdated {
             get {
                 return ResourceManager.GetString("ResourceSkillSuccesfullyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceSuccesfullyCreated.
+        /// </summary>
+        public static string ResourceSuccesfullyCreated {
+            get {
+                return ResourceManager.GetString("ResourceSuccesfullyCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceSuccesfullyDeleted.
+        /// </summary>
+        public static string ResourceSuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("ResourceSuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ResourceSuccesfullyUpdated.
+        /// </summary>
+        public static string ResourceSuccesfullyUpdated {
+            get {
+                return ResourceManager.GetString("ResourceSuccesfullyUpdated", resourceCulture);
             }
         }
         
