@@ -12,6 +12,7 @@
         [StringLength(127)]
         public string Name { get; set; }
 
+        [Required]
         public int TeamId { get; set; }
 
         public string TeamName { get; set; }
