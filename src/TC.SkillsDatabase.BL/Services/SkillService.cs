@@ -23,7 +23,14 @@
 
         public IEnumerable<SkillDto> GetAll()
         {
-            return Mapper.Map<List<SkillDto>>(this.skillRepository.GetAll());
+            var result = new List<SkillDto>();
+            var skills = this.skillRepository.GetAll().Include(s => s.Category);
+            foreach (var skill in skills)
+            {
+                result.Add(skill.ToDto());
+            }
+
+            return result;
         }
 
         public SkillDto GetById(int id)

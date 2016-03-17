@@ -9,6 +9,8 @@
     {
         IEnumerable<ResourceDto> GetAll();
 
+        IEnumerable<ResourceDto> GetAll(string resourceText);
+
         ResourceDto GetById(int id);
 
         IServiceResult<ResourceDto> Create(ResourceDto resourceDto);
