@@ -3,10 +3,12 @@
     using System;
     using System.Web.Mvc;
     using BL.Interfaces;
+    using Core;
     using Core.Models.DTO;
     using Core.Properties;
     using Core.Results;
     using Core.Utils;
+    using Helpers;
     using ViewModels;
 
     public class SkillController : BaseAbstractController
@@ -21,12 +23,14 @@
         }
 
         // GET: Skill
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Index()
         {
             return this.View(this.skillService.GetAll());
         }
 
         // GET: Skill/Details/5
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Details(int id)
         {
             var category = this.skillService.GetById(id);
@@ -39,6 +43,7 @@
         }
 
         // GET: Skill/Create
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create()
         {
             return this.View(this.PopulateViewModel(new SkillDto()));
@@ -49,6 +54,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create(SkillDto skill)
         {
             if (this.ModelState.IsValid)
@@ -68,6 +74,7 @@
         }
 
         // GET: Skill/Edit/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(int id)
         {
             var model = this.skillService.GetById(id);
@@ -84,6 +91,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(SkillDto skill)
         {
             IServiceResult<SkillDto> result = null;
@@ -104,6 +112,7 @@
         }
 
         // GET: Skill/Delete/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Delete(int id)
         {
             var model = this.skillService.GetById(id);
@@ -118,6 +127,7 @@
         // POST: Skill/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult DeleteConfirmed(int id)
         {
             var result = this.skillService.Delete(id);

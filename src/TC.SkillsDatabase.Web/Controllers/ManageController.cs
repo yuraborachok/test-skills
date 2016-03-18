@@ -6,23 +6,19 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using Base;
     using BL.Interfaces;
     using Core.Models.DTO;
     using Core.Properties;
     using Core.Utils;
     using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
     using Models;
     using ViewModels;
 
     [Authorize]
-    public class ManageController : BaseAbstractController
+    public class ManageController : BaseSecurityAbstractController
     {
-        private ApplicationSignInManager signInManager;
-
-        private ApplicationUserManager userManager;
-
         private readonly IUserService userService;
 
         public ManageController(IUserService userService)
@@ -34,32 +30,6 @@
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return this.signInManager ?? this.HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-
-            private set
-            {
-                this.signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return this.userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-
-            private set
-            {
-                this.userManager = value;
-            }
         }
 
         // GET: /Manage/Index
@@ -373,17 +343,6 @@
             }
 
             return this.View(this.PopulateViewModel(user));
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && this.userManager != null)
-            {
-                this.userManager.Dispose();
-                this.userManager = null;
-            }
-
-            base.Dispose(disposing);
         }
 
         #region Helpers

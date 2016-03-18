@@ -6,6 +6,7 @@ namespace TC.SkillsDatabase.DAL.Migrations
     using System.Data.Entity.Validation;
     using System.Security.Claims;
     using System.Text;
+    using Core;
     using Core.Models.DbModels;
 
     internal sealed class Configuration : DbMigrationsConfiguration<SkillsDatabaseContext>
@@ -18,9 +19,9 @@ namespace TC.SkillsDatabase.DAL.Migrations
         protected override void Seed(SkillsDatabaseContext context)
         {
 
-            var roleAdministrator = new CustomRole("Admin");
-            var roleManager = new CustomRole("Manager");
-            var roleUser = new CustomRole("User");
+            var roleAdministrator = new CustomRole(CustomRoles.Admin);
+            var roleManager = new CustomRole(CustomRoles.Manager);
+            var roleUser = new CustomRole(CustomRoles.User);
             context.Roles.AddOrUpdate(r => new { r.Name }, roleAdministrator, roleManager, roleUser);
 
             this.SaveChanges(context);

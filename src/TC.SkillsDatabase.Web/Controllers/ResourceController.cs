@@ -1,17 +1,15 @@
 ﻿namespace TC.SkillsDatabase.Web.Controllers
 {
     using System;
-    using System.Data.Entity;
     using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
     using BL.Interfaces;
-    using Core.Models.DbModels;
+    using Core;
     using Core.Models.DTO;
     using Core.Properties;
     using Core.Results;
     using Core.Utils;
-    using DAL;
+    using Helpers;
     using ViewModels;
 
     public class ResourceController : BaseAbstractController
@@ -30,12 +28,14 @@
         }
 
         // GET: Resource
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Index(string resourceSearchText)
         {
             return this.View(new ResourceSearchViewModel() { ResourceSearchText  = resourceSearchText, Resources = this.resourceService.GetAll(resourceSearchText).ToList() });
         }
 
         // GET: Resource/Details/5
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Details(int id)
         {
             var resource = this.resourceService.GetById(id);
@@ -48,6 +48,7 @@
         }
 
         // GET: Resource/Create
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create()
         {
             return this.View(this.PopulateViewModel(new ResourceDto()));
@@ -58,6 +59,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create(ResourceDto resource)
         {
             if (this.ModelState.IsValid)
@@ -77,6 +79,7 @@
         }
 
         // GET: Resource/Edit/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(int id)
         {
             var model = this.resourceService.GetById(id);
@@ -93,6 +96,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(ResourceDto resource)
         {
             IServiceResult<ResourceDto> result = null;
@@ -113,6 +117,7 @@
         }
 
         // GET: Resource/Delete/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Delete(int id)
         {
             var model = this.resourceService.GetById(id);
@@ -127,6 +132,7 @@
         // POST: Resource/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult DeleteConfirmed(int id)
         {
             var result = this.resourceService.Delete(id);
