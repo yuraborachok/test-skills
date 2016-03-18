@@ -215,6 +215,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GenericPrincipalExtensions.cs" />
+    <Compile Include="Helpers\RolesAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>

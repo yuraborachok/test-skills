@@ -7,11 +7,14 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Base;
+    using Core;
     using Core.Models.DbModels;
     using Core.Properties;
+    using Helpers;
     using Microsoft.AspNet.Identity;
     using Models;
 
+    [Roles(CustomRoles.Admin)]
     public class UserController : BaseSecurityAbstractController
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
@@ -61,7 +64,7 @@
                 var result = await this.UserManager.CreateAsync(newUser, user.Password);
                 if (result.Succeeded)
                 {
-                    result = await this.UserManager.AddToRoleAsync(newUser.Id, "User");
+                    result = await this.UserManager.AddToRoleAsync(newUser.Id, CustomRoles.User);
                     if (result.Succeeded)
                     {
                         this.ProcessMessage(Resources.UserSuccesfullyCreated);

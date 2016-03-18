@@ -1,16 +1,13 @@
 ﻿namespace TC.SkillsDatabase.Web.Controllers
 {
     using System;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Net;
     using System.Web.Mvc;
     using BL.Interfaces;
-    using Core.Models.DbModels;
+    using Core;
     using Core.Models.DTO;
     using Core.Properties;
     using Core.Results;
-    using DAL;
+    using Helpers;
 
     public class CategoryController : BaseAbstractController
     {
@@ -22,12 +19,14 @@
         }
 
         // GET: Category
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Index()
         {
             return this.View(this.categoryService.GetAll());
         }
 
         // GET: Category/Details/5
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Details(int id)
         {
             var category = this.categoryService.GetById(id);
@@ -40,6 +39,7 @@
         }
 
         // GET: Category/Create
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create()
         {
             return this.View();
@@ -50,6 +50,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create(CategoryDto category)
         {
             if (this.ModelState.IsValid)
@@ -69,6 +70,7 @@
         }
 
         // GET: Category/Edit/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(int id)
         {
             var model = this.categoryService.GetById(id);
@@ -85,6 +87,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(CategoryDto category)
         {
             IServiceResult<CategoryDto> result = null;
@@ -105,6 +108,7 @@
         }
 
         // GET: Category/Delete/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Delete(int id)
         {
             var model = this.categoryService.GetById(id);
@@ -119,6 +123,7 @@
         // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult DeleteConfirmed(int id)
         {
             var result = this.categoryService.Delete(id);

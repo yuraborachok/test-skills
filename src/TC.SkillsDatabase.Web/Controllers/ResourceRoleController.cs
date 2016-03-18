@@ -3,9 +3,11 @@
     using System;
     using System.Web.Mvc;
     using BL.Interfaces;
+    using Core;
     using Core.Models.DTO;
     using Core.Properties;
     using Core.Results;
+    using Helpers;
 
     public class ResourceRoleController : BaseAbstractController
     {
@@ -17,12 +19,14 @@
         }
 
         // GET: ResourceRole
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Index()
         {
             return this.View(this.resourceRoleService.GetAll());
         }
 
         // GET: ResourceRole/Details/5
+        [Roles(CustomRoles.Admin, CustomRoles.Manager)]
         public ActionResult Details(int id)
         {
             var category = this.resourceRoleService.GetById(id);
@@ -35,6 +39,7 @@
         }
 
         // GET: ResourceRole/Create
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +50,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Create(ResourceRoleDto resourceRole)
         {
             if (this.ModelState.IsValid)
@@ -64,6 +70,7 @@
         }
 
         // GET: ResourceRole/Edit/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(int id)
         {
             var model = this.resourceRoleService.GetById(id);
@@ -80,6 +87,7 @@
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult Edit(ResourceRoleDto resourceRole)
         {
             IServiceResult<ResourceRoleDto> result = null;
@@ -100,6 +108,7 @@
         }
 
         // GET: ResourceRole/Delete/5
+        [Roles(CustomRoles.Admin)]
         public ActionResult Delete(int id)
         {
             var model = this.resourceRoleService.GetById(id);
@@ -114,6 +123,7 @@
         // POST: ResourceRole/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Roles(CustomRoles.Admin)]
         public ActionResult DeleteConfirmed(int id)
         {
             var result = this.resourceRoleService.Delete(id);
